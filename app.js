@@ -5,10 +5,10 @@ const app = express();
 app.use(bp.json());
 
 app.get("/", (req, res, next) => {
-    res.json({
-        message: 'haloooo'
-    })
+  res.json({
+    message: "hoe",
+  });
 });
- app.listen(4444,()=>{
-    console.log('server');
- });
+app.listen(4444, () => {
+  console.log("server");
+});
