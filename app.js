@@ -1,7 +1,7 @@
 const express = require("express");
 const bp = require("body-parser");
 const app = express();
-
+const mongoose = require("mongoose");
 app.use(bp.json());
 // test my name is joe
 app.get("/", (req, res, next) => {
@@ -9,6 +9,14 @@ app.get("/", (req, res, next) => {
     message: "hoe",
   });
 });
-app.listen(4444, () => {
-  console.log("server");
-});
+
+mongoose
+  .connect(
+    "mongodb+srv://MuhammadH:3tlandev@3tlana.9istwys.mongodb.net/?retryWrites=true&w=majority&appName=3tlana"
+  )
+  .then((result) => {
+    app.listen(4444);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
