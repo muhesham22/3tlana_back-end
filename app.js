@@ -10,11 +10,11 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bp.json());
 app.use(cors());
 // test my name is joe
-app.get("/", (req, res, next) => {
-  res.json({
-    message: "hoe",
-  });
-});
+// app.get("/", (req, res, next) => {
+//   res.json({
+//     message: "hoe",
+//   });
+// });
 app.use(authroutes);
 
 mongoose
