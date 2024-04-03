@@ -5,7 +5,9 @@ const cors = require('cors');
 const app = express();
 const mongoose = require("mongoose");
 
-const authroutes = require('./routes/auth')
+const authroutes = require('./routes/auth');
+const shoproutes = require('./routes/shop');
+
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bp.json());
 app.use(cors());
@@ -15,7 +17,9 @@ app.use(cors());
 //     message: "hoe",
 //   });
 // });
+app.use(shoproutes);
 app.use(authroutes);
+
 
 mongoose
   .connect(
