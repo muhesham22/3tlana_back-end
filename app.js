@@ -20,6 +20,10 @@ app.use(cors());
 app.use(shoproutes);
 app.use(authroutes);
 
+app.get("/",(req, res)=>{
+  res.json({message:"Welcome to the API!"})
+})
+
 
 mongoose
   .connect(
@@ -32,3 +36,7 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+
+  app.listen("8000",()=>{
+    console.log("server started on port 8000")
+  })

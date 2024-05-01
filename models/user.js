@@ -7,16 +7,10 @@ const cartitemSchema = new mongoose.Schema({
   qty: { type: Number }
 })
 const userSchema = new mongoose.Schema({
-  fullname: {
-    firstname: {
-      type: String,
-      required: true,
+  name: {
+    type:String,
+    required:true
     },
-    lastname: {
-      type: String,
-      required: true,
-    },
-  },
   email: {
     type: String,
     required: true,
