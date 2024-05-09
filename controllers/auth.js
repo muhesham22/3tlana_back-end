@@ -8,26 +8,16 @@ exports.register = async (req, res, next) => {
             email,
             phone,
             password,
-            confirmPassword,
             carModel,
+            carbrand,
             carYear,
+            carPlateNumber
         } = req.body;
-        console.log(
-            name,
-            email,
-            phone,
-            password,
-            confirmPassword,
-            carModel,
-            carYear,
-        )
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             res.status(400).json({ error: 'User already exists' })
         }
-        if(password !== confirmPassword){
-            return res.json({message:"password does not match confirm-password"})
-        }
+        
         const hashedpass = await bcrypt.hash(password, 10)
         const user = new User({
             name,
@@ -36,9 +26,9 @@ exports.register = async (req, res, next) => {
             password: hashedpass,
             car: {
                 model: carModel,
-                brand:'unkown',
+                brand:carbrand,
                 year: carYear,
-                platenumber:"unknown"
+                platenumber:carPlateNumber
             }
         })
         await user.save();
@@ -63,28 +53,17 @@ exports.login = async (req, res, next) => {
         if (!isvalid) {
             res.status(401).json({ error: 'password invalid' });
         }
-        const token = jwt.sign({
-            name: user.name,
-            email: user.email,
-            id: user._id,
-            carPlateNumber:user.car.platenumber,
-            carModel:user.car.model,
-            carYear: user.car.year,
-            phone:user.phone
-            }, 'superprivatekey', { expiresIn: '48h' })
+        const token = jwt.sign({ userid: user._id.toString() }, 'superprivatekey', { expiresIn: '48h' })
         res.status(200).json({
             message: 'user logged in successfully',
             token,
+            user: {
+                name: user.name,
+                email: user.email,
+                id: user._id
+            }
         })
     } catch (error) {
         res.status(500).json({ error: 'internal server error' })
     }
-}
-
-
-
-exports.profile = (req,res,next) => {
-    let token = req.params.token
-    const decode =  jwt.verify(token , 'superprivatekey' )
-    res.json({message:decode})
-}
+};
