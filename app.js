@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 
 const authroutes = require('./routes/auth');
 const shoproutes = require('./routes/shop');
+const adminroutes = require('./routes/admin');
+const profileroute = require('./routes/profile');
 
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bp.json());
@@ -19,6 +21,8 @@ app.use(cors());
 // });
 app.use(shoproutes);
 app.use(authroutes);
+app.use(adminroutes);
+app.use(profileroute);
 
 app.get("/",(req, res)=>{
   res.json({message:"Welcome to the API!"})
@@ -30,13 +34,11 @@ mongoose
     'mongodb+srv://MuhammadH:rRzIXqrrr7QDjKIB@3tlana.9istwys.mongodb.net/3tlan'
   )
   .then((result) => {
-    app.listen(4444);
+    app.listen(4443);
     console.log('connected');
   })
   .catch((err) => {
     console.log(err);
   });
 
-  app.listen("8000",()=>{
-    console.log("server started on port 8000")
-  })
+
