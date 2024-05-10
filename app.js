@@ -8,21 +8,19 @@ const mongoose = require("mongoose");
 const authroutes = require('./routes/auth');
 const shoproutes = require('./routes/shop');
 const adminroutes = require('./routes/admin');
-const profileroute = require('./routes/profile');
+// const profileroute = require('./routes/profile');
+const cartroutes = require('./routes/cart')
 
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(bp.json());
 app.use(cors());
-// test my name is joe
-// app.get("/", (req, res, next) => {
-//   res.json({
-//     message: "hoe",
-//   });
-// });
+
+
 app.use(shoproutes);
 app.use(authroutes);
-app.use(adminroutes);
-app.use(profileroute);
+app.use('/admin',adminroutes);
+// app.use(profileroute);
+app.use(cartroutes);
 
 app.get("/",(req, res)=>{
   res.json({message:"Welcome to the API!"})
