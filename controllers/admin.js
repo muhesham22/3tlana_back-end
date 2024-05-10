@@ -1,5 +1,7 @@
 const Product = require('../models/product');
 const User = require('../models/user');
+const Technician = require('../models/technician');
+const technician = require('../models/technician');
 
 exports.addproduct = async (req, res, next) => {
     try {
@@ -35,7 +37,7 @@ exports.addproduct = async (req, res, next) => {
     }
 };
 
-exports.update = async (req, res, next) => {
+exports.updateproduct = async (req, res, next) => {
     try {
         const productId = req.params.productId;
         if (!productId || !mongoose.Types.ObjectId.isValid(productId)) {
@@ -59,7 +61,7 @@ exports.update = async (req, res, next) => {
     }
 };
 
-exports.delete = async (req, res, next) => {
+exports.deleteproduct = async (req, res, next) => {
     try {
         const productId = req.params.productId;
         if (!productId || !mongoose.Types.ObjectId.isValid(productId)) {
@@ -81,6 +83,46 @@ exports.delete = async (req, res, next) => {
         }
         await user.save();
         res.json({ message: 'product deleted successfully', product });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'internal Server Error' });
+    }
+};
+
+exports.addtech = async (req,res)=>{
+    try {
+        const { 
+            firstname,
+            lastname,
+            ssn,
+            feild
+        } = req.body;
+        const technician = new Technician({
+            firstname,
+            lastname,
+            ssn,
+            feild
+        })
+        await technician.save();
+        res.status(201).json({ message: 'technician added successfully' })
+    } catch (error) {
+        console.log(error);
+        console.log('technician could not be added');
+    }
+};
+
+exports.deletetech = async (req, res, next) => {
+    try {
+        const technicianId = req.params.technicianId;
+        if (!technicianId || !mongoose.Types.ObjectId.isValid(technicianId)) {
+            return res.status(422).json({ error: 'invalid input' });
+        }
+        const technician = await Technician.findById(technicianId);
+        if (!technician) {
+            return res.status(404).json({ error: 'technician not found' });
+        }
+        await technician.findByIdAndRemove(technicianId);
+        res.json({ message: 'technician deleted successfully', technician });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'internal Server Error' });

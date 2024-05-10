@@ -60,7 +60,13 @@ exports.login = async (req, res, next) => {
             user: {
                 name: user.name,
                 email: user.email,
-                id: user._id
+                id: user._id,
+                phone:user.phone,
+                carModel:user.car.model,
+                carBrand:user.car.brand,
+                carYear:user.car.year,
+                carPN:user.car.platenumber
+
             }
         })
     } catch (error) {

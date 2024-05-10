@@ -4,9 +4,13 @@ const adminController = require('../controllers/admin');
 
 router.post('/add-product', adminController.addproduct);
 
-router.put('/:productId', adminController.update);
+router.post('/add-technician', adminController.addtech);
 
-router.delete('/:productId', adminController.delete);
+router.put('/:productId', adminController.updateproduct);
+
+router.delete('/:productId', adminController.deleteproduct);
+
+router.delete('/:technicianId', adminController.deletetech);
 
 module.exports = router;
 
