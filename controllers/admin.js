@@ -33,7 +33,8 @@ exports.addproduct = async (req, res, next) => {
             }
         })
         await product.save();
-        res.status(201).json({ message: 'product added successfully' })
+        const productId =product._id;
+        res.status(201).json({ message: 'product added successfully' ,productId})
     } catch (error) {
         console.log(error);
         console.log('product could not be added');
