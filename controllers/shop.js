@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const Order = require('../models/order');
+const mongoose = require('mongoose');
 
 exports.getproducts = async (req, res, next) => {
     try {
@@ -22,7 +23,7 @@ exports.getOneproduct = async (req,res,next)=>{
         if (!product) {
             return res.status(404).json({ error: 'product not found' });
         }
-        res.json({ message: 'products returned', product });
+        res.json({ message: 'product returned', product });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'internal Server Error' });
