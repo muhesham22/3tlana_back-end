@@ -1,7 +1,8 @@
+const fs = require('fs');
+const path = require('path');
 const Product = require('../models/product');
 const User = require('../models/user');
 const Technician = require('../models/technician');
-const technician = require('../models/technician');
 
 exports.addproduct = async (req, res, next) => {
     try {
@@ -10,18 +11,19 @@ exports.addproduct = async (req, res, next) => {
             description,
             price,
             brand,
-            imageurl,
             qty,
             cbrand,
             cmodel,
             cyear
         } = req.body;
+        // const imageUrl = req.file;
+        // console.log(req.file);
         const product = new Product({
             name,
             price,
             description,
             prodbrand: brand,
-            image: imageurl,
+            image: imageUrl,
             qty,
             car: {
                 brand:cbrand,
