@@ -12,6 +12,7 @@ exports.addproduct = async (req, res, next) => {
             price,
             brand,
             qty,
+            image,
             cbrand,
             cmodel,
             cyear
@@ -23,7 +24,7 @@ exports.addproduct = async (req, res, next) => {
             price,
             description,
             prodbrand: brand,
-            image: imageUrl,
+            image,
             qty,
             car: {
                 brand:cbrand,
