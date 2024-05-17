@@ -37,11 +37,11 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(cors());
 
 
-app.use(shoproutes);
-app.use(authroutes);
+app.use('/shop',shoproutes);
+app.use('/auth',authroutes);
 app.use('/admin', adminroutes);
 // app.use(profileroute);
-app.use(cartroutes);
+app.use('/cart',cartroutes);
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the API!" })
