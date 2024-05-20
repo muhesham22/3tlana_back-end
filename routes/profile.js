@@ -1,8 +1,11 @@
 const router = require('express').Router();
 
-const {viewprofile} = require('../controllers/profile');
+const { viewprofile } = require('../controllers/profile');
 
-router.get('/profile', viewprofile);
+const { authing } = require('../utils/authing');
+
+
+router.get('/profile', authing, viewprofile);
 
 module.exports = router;
 

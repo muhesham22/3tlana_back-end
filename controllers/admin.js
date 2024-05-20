@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const mongoose = require('mongoose')
 const Product = require('../models/product');
 const User = require('../models/user');
 const Technician = require('../models/technician');
@@ -12,19 +13,17 @@ exports.addproduct = async (req, res, next) => {
             price,
             brand,
             qty,
-            image,
             cbrand,
             cmodel,
             cyear
         } = req.body;
-        // const imageUrl = req.file;
-        // console.log(req.file);
+        console.log(req.file);
         const product = new Product({
             name,
             price,
             description,
             prodbrand: brand,
-            image,
+            image:req.file.path.replace('\\',"/"),
             qty,
             car: {
                 brand:cbrand,
@@ -75,17 +74,17 @@ exports.deleteproduct = async (req, res, next) => {
         if (!product) {
             return res.status(404).json({ error: 'product not found' });
         }
-        await Product.findByIdAndRemove(productId);
-        const user = await User.findById(req.userId);
+        await Product.findByIdAndDelete(productId);
+        // const user = await User.findById(req.userId);
         const users = await User.find();
         for (const user of users) {
-            const remfromcart = user.cart.filter(item => item.product.toString() === productId);
-            if (remfromcart.length > 0) {
+            // const remfromcart = user.cart.filter(item => item.product.toString() === productId);
+            if (user.cart.length > 0) {
                 user.cart = user.cart.filter(item => item.product.toString() !== productId);
                 await user.save();
             }
         }
-        await user.save();
+        // await user.save();
         res.json({ message: 'product deleted successfully', product });
     } catch (error) {
         console.error(error);

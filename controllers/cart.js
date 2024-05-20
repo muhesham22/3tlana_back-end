@@ -24,10 +24,10 @@ exports.view = async (req, res) => {
 
 exports.addItem = async (req, res) => {
     const productId = req.params.productId;
-    if (!req.body.quantity) {
-        req.body.quantity = 1;
+    if (!req.body.qty) {
+        req.body.qty = 1;
     }
-    const quantity = req.body.quantity;
+    const qty = req.body.qty;
     const userId = req.userId;
     try {
         const user = await User.findById(userId);
@@ -43,9 +43,9 @@ exports.addItem = async (req, res) => {
         }
         const existingCartItem = user.cart.find(item => item.product.toString() === productId);
         if (existingCartItem) {
-            existingCartItem.quantity += quantity;
+            existingCartItem.qty += qty;
         } else {
-            user.cart.push({ product: productId, quantity });
+            user.cart.push({ product: productId, qty });
         }
         await user.save();
         res.status(201).json({ message: 'product added to cart' });

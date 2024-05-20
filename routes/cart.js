@@ -2,10 +2,12 @@ const router = require('express').Router();
 
 const cartcontroller = require('../controllers/cart');
 
-router.get('/cart', cartcontroller.view);
+const { authing } = require('../utils/authing');
 
-router.post('/:productId', cartcontroller.addItem);
+router.get('/', cartcontroller.view);
 
-router.delete('/:productId',cartcontroller.removeItem);
+router.post('/:productId', authing, cartcontroller.addItem);
+
+router.delete('/:productId', authing, cartcontroller.removeItem);
 
 module.exports = router;

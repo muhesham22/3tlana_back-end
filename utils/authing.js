@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-module.exports = (req, res, next) => {
+exports.authing = (req, res, next) => {
     const authHeader = req.get('Authorization');
     if (!authHeader) {
         return res.status(403).json({ error: 'missing token' });
@@ -15,6 +15,6 @@ module.exports = (req, res, next) => {
     if (!decodedToken) {
         return res.status(401).json({ error: 'authentication failed' });
     }
-    req.userId = decodedToken.userId;
+    req.userId = decodedToken.userid;
     next();
 };
