@@ -98,16 +98,19 @@ exports.addtech = async (req,res)=>{
             firstname,
             lastname,
             ssn,
-            feild
+            field
         } = req.body;
         const technician = new Technician({
-            firstname,
-            lastname,
+            fullname: {
+                firstname,
+                lastname
+            }
+            ,
             ssn,
-            feild
+            field
         })
         await technician.save();
-        res.status(201).json({ message: 'technician added successfully' })
+      res.status(201).json({ message: 'technician added successfully' })
     } catch (error) {
         console.log(error);
         console.log('technician could not be added');
@@ -131,6 +134,16 @@ exports.deletetech = async (req, res, next) => {
         res.status(500).json({ error: 'internal Server Error' });
     }
 };
+
+exports.getTech = async (req , res , next) => {
+    try {
+        const technicians = await Technician.find();
+        res.status(200).json({ message: 'technician returned', data: technicians });
+}
+catch(e){
+    res.status(500).json({error:e})
+}
+}
 
 
 

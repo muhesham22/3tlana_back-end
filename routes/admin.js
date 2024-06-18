@@ -12,5 +12,7 @@ router.delete('/:productId', adminController.deleteproduct);
 
 router.delete('/:technicianId', adminController.deletetech);
 
+router.get('/' , adminController.getTech )
+
 module.exports = router;
 
