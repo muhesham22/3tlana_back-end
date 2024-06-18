@@ -10,6 +10,7 @@ exports.authing = (req, res, next) => {
     try {
         decodedToken = jwt.verify(token, 'superprivatekey');
     } catch (error) {
+        console.error('Token verification error:', error);
         return res.status(403).json({ error: 'token invalid authorization failed' });
     }
     if (!decodedToken) {
