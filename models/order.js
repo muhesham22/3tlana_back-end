@@ -1,27 +1,33 @@
+const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 
+
 const orderSchema = new mongoose.Schema({
+  type: { type: String, enum: ['products', 'service'] },
+  service: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Service'
+  },
   items: [
     {
-      product: { type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'Product' },
-      quantity: { type: Number, required: true }
+      product: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+      },
+      quantity: { type: Number }
     }
   ],
   user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User'
-    
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'User'
+
   },
   total: {
-    type: Number,
-    required: true
+    type: Number
   },
   address: {
-    type: String,
-    required: true
+    type: String
   }
 });
 

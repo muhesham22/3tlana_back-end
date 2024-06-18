@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
 
+
+const Product = require('../models/product');
 const User = require('../models/user');
 const Order = require('../models/order');
 
@@ -27,13 +29,13 @@ exports.completeOrder = async (req, res) => {
         if (!user.cart || user.cart.length === 0) {
             return res.status(404).send({ error: 'Cart is empty' });
         }
-
-        const totalPrice = user.cart.reduce((total, item) => {
-            const product = item.product;
-            const productPrice = product ? product.price : 0;
-            return total + item.quantity * productPrice;
-        }, 0);
-
+            console.log(user.cart);
+            let totalPrice = 0;
+            for (let item of user.cart) {
+                const product = await Product.findById(item.product)
+                const productPrice = product.price;
+                totalPrice += item.qty * productPrice;
+            }
         const order = new Order({
             items: { ...user.cart },
             total: totalPrice,
@@ -47,6 +49,7 @@ exports.completeOrder = async (req, res) => {
 
         res.status(201).send({ message: 'Order completed successfully', order });
     } catch (error) {
+        // console.error(error)
         res.status(500).send({ error: 'Failed to complete the order' });
     }
 };

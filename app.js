@@ -14,6 +14,8 @@ const adminroutes = require('./routes/admin');
 // const profileroute = require('./routes/profile');
 const cartroutes = require('./routes/cart')
 const orderroutes = require('./routes/order')
+const serviceroutes = require('./routes/service')
+
 
 const app = express();
 const filestorage = multer.diskStorage({
@@ -44,6 +46,8 @@ app.use('/admin', adminroutes);
 // app.use(profileroute);
 app.use('/cart',cartroutes);
 app.use('/order',orderroutes);
+app.use('/service',serviceroutes);
+
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to the API!" })
