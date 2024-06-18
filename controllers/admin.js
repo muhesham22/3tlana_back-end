@@ -4,6 +4,7 @@ const mongoose = require('mongoose')
 const Product = require('../models/product');
 const User = require('../models/user');
 const Technician = require('../models/technician');
+const Service = require('../models/service');
 
 exports.addproduct = async (req, res, next) => {
     try {
@@ -134,6 +135,44 @@ exports.deletetech = async (req, res, next) => {
         res.status(500).json({ error: 'internal Server Error' });
     }
 };
+exports.addService = async (req,res)=>{
+    try {
+        const { 
+            name,
+            description,
+            technicians
+        } = req.body;
+        const service = new Service({
+            name,
+            description,
+            technicians
+        })
+        await service.save();
+        res.status(201).json({ message: 'service added successfully' })
+    } catch (error) {
+        console.log(error);
+        console.log('service could not be added');
+    }
+};
+exports.deleteservice = async (req, res, next) => {
+    try {
+        const serviceId = req.params.serviceId;
+        if (!serviceId || !mongoose.Types.ObjectId.isValid(serviceId)) {
+            return res.status(422).json({ error: 'invalid input' });
+        }
+        const service = await Service.findById(serviceId);
+        if (!service) {
+            return res.status(404).json({ error: 'service not found' });
+        }
+        await service.findByIdAndRemove(serviceId);
+        res.json({ message: 'service deleted successfully', service });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'internal Server Error' });
+    }
+};
+
+
 
 exports.getTech = async (req , res , next) => {
     try {

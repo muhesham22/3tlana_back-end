@@ -11,15 +11,16 @@ exports.view = async (req, res) => {
         if (!user) {
             return res.status(404).json({ error: 'user not found' });
         }
-        if(user.cart.length === 0){
+        if (user.cart.length === 0) {
             return res.json({ error: 'cart is empty' });
         }
-        const totalPrice = user.cart.reduce((total, item) => {
-            const product = item.product;
-            const productPrice = product ? product.price : 0;
-            return total + item.quantity * productPrice;
-        }, 0);
-        res.status(200).json({ message: 'cart returned', cart: user.cart, totalPrice: totalPrice });
+        let totalPrice = 0;
+        for (let item of user.cart) {
+            const product = await Product.findById(item.product)
+            const productPrice = product.price;
+            totalPrice += item.qty * productPrice;
+        }
+        res.status(200).json({ message: 'cart returned', cart: user.cart, totalPrice });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'internal Server Error' });
