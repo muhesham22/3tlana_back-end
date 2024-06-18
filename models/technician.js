@@ -12,7 +12,7 @@ const technicianSchema = new mongoose.Schema({
     },
     ssn: {
         type: String,
-        required: true
+        required: false
     },
     field: {
         type: String,
