@@ -2,19 +2,20 @@ const mongoose = require("mongoose");
 const cartitemSchema = new mongoose.Schema({
   product: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Product'
+    ref: "Product",
   },
-  qty: { type: Number }
-})
+  qty: { type: Number },
+});
 const userSchema = new mongoose.Schema({
   name: {
-    type:String,
-    required:true
-    },
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,
   },
+  verification: { type: String },
   password: {
     type: String,
     required: true,
@@ -35,9 +36,7 @@ const userSchema = new mongoose.Schema({
     model: { type: String },
     year: { type: Number },
   },
-  cart: [
-    cartitemSchema
-  ]
+  cart: [cartitemSchema],
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model("User", userSchema);
