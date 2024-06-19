@@ -15,7 +15,11 @@ router.put('/:productId', adminController.updateproduct);
 
 router.delete('/:productId' , adminController.deleteproduct);
 
-router.delete('/:technicianId', adminController.deletetech);
+router.delete('/technician/:technicianId', adminController.deletetech);
+
+router.get('/technician' , adminController.getTechnician)
+
+router.get('/',adminController.getTech);
 
 router.delete('/:serviceId', adminController.deleteservice);
 

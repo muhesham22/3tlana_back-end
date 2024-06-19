@@ -96,18 +96,13 @@ exports.deleteproduct = async (req, res, next) => {
 exports.addtech = async (req,res)=>{
     try {
         const { 
-            firstname,
-            lastname,
-            ssn,
+            name,
+            phone,
             field
         } = req.body;
         const technician = new Technician({
-            fullname: {
-                firstname,
-                lastname
-            }
-            ,
-            ssn,
+            name ,
+            phone,
             field
         })
         await technician.save();
@@ -128,7 +123,7 @@ exports.deletetech = async (req, res, next) => {
         if (!technician) {
             return res.status(404).json({ error: 'technician not found' });
         }
-        await technician.findByIdAndRemove(technicianId);
+         await technician.deleteOne({ _id: technicianId });
         res.json({ message: 'technician deleted successfully', technician });
     } catch (error) {
         console.error(error);
@@ -182,6 +177,27 @@ exports.getTech = async (req , res , next) => {
 catch(e){
     res.status(500).json({error:e})
 }
+}
+
+exports.getTech = async (req , res , next) => {
+    try {
+        const technicians = await Technician.find();
+        res.status(200).json({ message: 'technician returned', data: technicians });
+    }
+    catch(e){
+        res.json({error:e})
+    }
+}
+
+
+exports.getTechnician = async (req , res , next) => {
+    try {
+        const technicians = await Technician.find();
+        res.status(200).json({ message: 'technician returned', data: technicians });
+    }
+    catch(e){
+        res.json({error:e})
+    }
 }
 
 

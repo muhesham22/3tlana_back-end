@@ -1,18 +1,12 @@
 const mongoose = require("mongoose");
 const technicianSchema = new mongoose.Schema({
-    fullname: {
-        firstname: {
-            type: String,
-            required: true
-        },
-        lastname: {
-            type: String,
-            required: true
-        },
+    name: {
+        type:String,
+        required:true
     },
-    ssn: {
+    phone: {
         type: String,
-        required: false
+        required: true
     },
     field: {
         type: String,
