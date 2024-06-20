@@ -6,7 +6,7 @@ const Product = require('../models/product');
 exports.view = async (req, res) => {
     const userId = req.userId;
     try {
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).populate('cart.product');;
         console.log(userId);
         if (!user) {
             return res.status(404).json({ error: 'user not found' });
