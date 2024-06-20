@@ -15,9 +15,8 @@ exports.viewServices = async (req, res) => {
 };
 
 exports.bookService = async (req, res) => {
-    const userId = req.userId;
-    const serviceId = req.params.serviceId;
-    let { technicianId } = req.body;
+    const userId = req.query.userId;
+    const serviceId = req.query.serviceId;
     try {
         const user = await User.findById(userId);
         if (!user) {
@@ -26,13 +25,6 @@ exports.bookService = async (req, res) => {
         const service = await Service.findById(serviceId);
         if (!service) {
             return res.status(404).send({ error: 'Service not found' });
-        }
-        if (!technicianId) {
-            technicianId = service.technicians[Math.floor(Math.random() * (service.technicians.length - 1))]
-        }
-        let technician = await Technician.findById(technicianId);
-        if (!technician) {
-            return res.status(404).send({ error: 'technician not found' });
         }
         const order = new Order({
             type: 'service',

@@ -7,7 +7,7 @@ const { authing } = require('../utils/authing');
 
 router.get('/' ,servicecontroller.viewServices);
 
-router.post('/:serviceId', servicecontroller.bookService);
+router.post('/book-service', servicecontroller.bookService);
 
 router.get('/:service' , servicecontroller.viewSingleServices )
 
