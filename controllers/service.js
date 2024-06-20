@@ -15,8 +15,8 @@ exports.viewServices = async (req, res) => {
 };
 
 exports.bookService = async (req, res) => {
-    const userId = req.query.userId;
-    const serviceId = req.query.serviceId;
+    const userId = req.body.userId;
+    const serviceId = req.body.serviceId;
     try {
         const user = await User.findById(userId);
         if (!user) {
