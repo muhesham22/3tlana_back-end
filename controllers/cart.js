@@ -6,8 +6,7 @@ const Product = require('../models/product');
 exports.view = async (req, res) => {
     const userId = req.userId;
     try {
-        const user = await User.findById(userId).populate('cart.product');;
-        console.log(userId);
+        const user = await User.findById(userId).populate({path:'cart.product' , select:'name'})
         if (!user) {
             return res.status(404).json({ error: 'user not found' });
         }
@@ -29,6 +28,7 @@ exports.view = async (req, res) => {
 
 exports.addItem = async (req, res) => {
     const productId = req.params.productId;
+    const type = req.body.type
     if (!req.body.qty) {
         req.body.qty = 1;
     }
@@ -50,7 +50,7 @@ exports.addItem = async (req, res) => {
         if (existingCartItem) {
             existingCartItem.qty += qty;
         } else {
-            user.cart.push({ product: productId, qty });
+            user.cart.push({ product: productId, qty , type });
         }
         await user.save();
         res.status(201).json({ message: 'product added to cart' });

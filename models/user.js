@@ -5,6 +5,7 @@ const cartitemSchema = new mongoose.Schema({
     ref: "Product",
   },
   qty: { type: Number },
+  type:{type:String}
 });
 const userSchema = new mongoose.Schema({
   name: {

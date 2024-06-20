@@ -10,6 +10,7 @@ router.post('/add-product', adminController.addproduct);
 
 router.post('/add-technician', adminController.addtech);
 
+router.get('/products' , adminController.getProducts)
 
 router.put('/:productId', adminController.updateproduct);
 
