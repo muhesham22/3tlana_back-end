@@ -59,7 +59,7 @@ app.use((req, res, next) => {
 
 mongoose
   .connect(
-    'mongodb+srv://MuhammadH:rRzIXqrrr7QDjKIB@3tlana.9istwys.mongodb.net/3tlana'
+    'mongodb+srv://MuhammadH:rRzIXqrrr7QDjKIB@3tlana.9istwys.mongodb.net/3tlan'
   )
   .then((result) => {
     app.listen(4443);
