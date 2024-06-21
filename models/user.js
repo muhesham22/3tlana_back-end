@@ -8,6 +8,7 @@ const cartitemSchema = new mongoose.Schema({
   type: { type: String },
   image: { type: String }
 });
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,

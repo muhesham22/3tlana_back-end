@@ -21,7 +21,6 @@ exports.completeOrder = async (req, res) => {
         if (!user.cart || user.cart.length === 0) {
             return res.status(404).send({ error: 'Cart is empty' });
         }
-        console.log(user.cart);
         let items = [];
         let totalPrice = 0;
         for (let item of user.cart) {
@@ -42,7 +41,7 @@ exports.completeOrder = async (req, res) => {
 
         res.status(201).send({ message: 'Order completed successfully', order });
     } catch (error) {
-        // console.error(error)
+        console.error(error)
         res.status(500).send({ error: 'Failed to complete the order' });
     }
 };
@@ -59,6 +58,7 @@ exports.vieworders = async (req, res) => {
             return res.send({ message: "user has no orders yet" })
         }
     } catch (error) {
+        console.error(error)
         res.status(500).send({ error: 'Failed to retrieve orders' });
     }
 };

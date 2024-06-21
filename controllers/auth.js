@@ -69,6 +69,7 @@ exports.login = async (req, res, next) => {
       },
     });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: "internal server error" });
   }
 };
@@ -88,13 +89,9 @@ exports.forgetPassword = async (req, res, next) => {
         pass: "vxohbdzvtpqbnayg", // Replace with your Gmail password
       },
     });
-
     const code = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
-
     user.verification = code;
-
     await user.save();
-
     let mailOptions = {
       from: {
         name: "3tlan",
@@ -104,7 +101,6 @@ exports.forgetPassword = async (req, res, next) => {
       subject: "Verfication code", // Subject line
       html: `<h1>${code}</h1>`,
     };
-
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         return console.log("Error occurred:", error);
@@ -112,8 +108,9 @@ exports.forgetPassword = async (req, res, next) => {
       console.log("Email sent successfully!", info);
       res.json({ message: "Email sent successfully!" })
     });
-  } catch (e) {
-    return res.json({ error: e });
+  } catch (error) {
+    console.log(error);
+    res.json({ error: "Internal server error" });
   }
 };
 
@@ -124,8 +121,9 @@ exports.confirmVerification = async (req, res, next) => {
     if (user.verification !== verification.toString())
       return res.json({ data: "Invalid verification code" });
     return res.json({ message: "Verification success", userId: user._id });
-  } catch (e) {
-    return res.json({ error: e });
+  } catch (error) {
+    console.log(error);
+    res.json({ error: "Internal server error" });
   }
 };
 
@@ -135,14 +133,14 @@ exports.resetPassword = async (req, res, next) => {
   if (password !== confirmPassword) {
     return res.json({ error: "Passwords do not match" });
   }
-
   try {
     const user = await User.findById(userId);
     if (!user) return res.json({ data: "Invalid verification code" });
     user.password = await bcrypt.hash(password, 10);
     await user.save();
     return res.json({ data: "Password changed successfully" });
-  } catch (e) {
-    return res.json({ error: e });
+  } catch (error) {
+    console.log(error);
+    res.json({ error: "Internal server error" });
   }
 };

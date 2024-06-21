@@ -39,7 +39,7 @@ exports.addproduct = async (req, res, next) => {
         res.status(201).json({ message: 'product added successfully', productId })
     } catch (error) {
         console.log(error);
-        console.log('product could not be added');
+        res.status(500).json({ error: 'Failed to add product' });
     }
 };
 
@@ -63,7 +63,7 @@ exports.updateproduct = async (req, res, next) => {
         res.json({ message: 'product updated successfully', product });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'internal Server Error' });
+        res.status(500).json({ error: 'Failed to update product' });
     }
 };
 
@@ -91,7 +91,7 @@ exports.deleteproduct = async (req, res, next) => {
         res.json({ message: 'product deleted successfully', product });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'internal Server Error' });
+        res.status(500).json({ error: 'Failed to delete product' });
     }
 };
 
@@ -111,7 +111,7 @@ exports.addtech = async (req, res) => {
         res.status(201).json({ message: 'technician added successfully' })
     } catch (error) {
         console.log(error);
-        console.log('technician could not be added');
+        res.status(500).json({ error: 'Failed to add technician' });
     }
 };
 
@@ -129,7 +129,7 @@ exports.deletetech = async (req, res, next) => {
         res.json({ message: 'technician deleted successfully', technician });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'internal Server Error' });
+        res.status(500).json({ error: 'Failed to delete technician' });
     }
 };
 exports.addService = async (req, res) => {
@@ -148,7 +148,7 @@ exports.addService = async (req, res) => {
         res.status(201).json({ message: 'service added successfully' })
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'internal server error' });
+        res.status(500).json({ error: 'Failed to add service' });
     }
 };
 exports.deleteservice = async (req, res, next) => {
@@ -165,53 +165,46 @@ exports.deleteservice = async (req, res, next) => {
         res.json({ message: 'service deleted successfully', service });
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'internal Server Error' });
+        res.status(500).json({ error: 'Failed to delete service' });
     }
 };
 
-
+exports.getTech = async (req, res, next) => {
+    try {
+        const technicians = await Technician.find();
+        res.status(200).json({ message: 'technician returned', data: technicians });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to get technician' });
+    }
+};
 
 exports.getTech = async (req, res, next) => {
     try {
         const technicians = await Technician.find();
         res.status(200).json({ message: 'technician returned', data: technicians });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to get technician' });
     }
-    catch (e) {
-        res.status(500).json({ error: e })
-    }
-}
-
-exports.getTech = async (req, res, next) => {
-    try {
-        const technicians = await Technician.find();
-        res.status(200).json({ message: 'technician returned', data: technicians });
-    }
-    catch (e) {
-        res.json({ error: e })
-    }
-}
-
+};
 
 exports.getTechnician = async (req, res, next) => {
     try {
         const technicians = await Technician.find();
         res.status(200).json({ message: 'technician returned', data: technicians });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to get technician' });
     }
-    catch (e) {
-        res.json({ error: e })
-    }
-}
+};
 
 exports.getProducts = async (req, res, next) => {
     try {
         const products = await Product.find();
         res.status(200).json({ message: 'products returned', data: products });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Failed to get products' });
     }
-    catch (e) {
-        res.json({ error: e })
-    }
-}
-
-
-
-
+};
