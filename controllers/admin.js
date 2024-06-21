@@ -12,26 +12,17 @@ exports.addproduct = async (req, res, next) => {
             name,
             description,
             price,
-            brand,
             qty,
-            cbrand,
-            cmodel,
-            cyear,
             types
         } = req.body;
+        
         console.log(req.file);
         const product = new Product({
             name,
             price,
             description,
-            prodbrand: brand,
             image: req.file.path.replace('\\', "/"),
             qty,
-            car: {
-                brand: cbrand,
-                model: cmodel,
-                year: cyear
-            },
             types
         })
         await product.save();

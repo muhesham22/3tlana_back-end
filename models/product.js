@@ -15,12 +15,6 @@ const productSchema = new mongoose.Schema({
     image: {
         type: String
     },
-    car: {
-        brand: { type: String },
-        model: { type: String },
-        year: { type: Number },
-    },
-    brand: { type: String },
     qty: {
         required: true,
         type: Number,
