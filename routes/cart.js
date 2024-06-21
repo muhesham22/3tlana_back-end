@@ -4,7 +4,7 @@ const cartcontroller = require('../controllers/cart');
 
 const { authing } = require('../utils/authing');
 
-router.get('/',authing ,cartcontroller.view);
+router.get('/', authing, cartcontroller.view);
 
 router.post('/:productId', authing, cartcontroller.addItem);
 

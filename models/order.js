@@ -1,7 +1,6 @@
 const { ObjectId } = require("mongodb");
 const mongoose = require("mongoose");
 
-
 const orderSchema = new mongoose.Schema({
   type: { type: String, enum: ['products', 'service'] },
   service: {
@@ -14,7 +13,10 @@ const orderSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Product'
       },
-      quantity: { type: Number }
+      quantity: { type: Number },
+      price: { type: Number },
+      name: { type: String },
+      type: { type: String }
     }
   ],
   user: {

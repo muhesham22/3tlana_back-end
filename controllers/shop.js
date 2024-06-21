@@ -6,14 +6,13 @@ exports.getproducts = async (req, res, next) => {
     try {
         const products = await Product.find();
         res.status(200).json({ message: 'products returned', products });
-
     } catch (error) {
         console.log(error);
-        res.status(500).json({ error: 'internal Server Error' });        
+        res.status(500).json({ error: 'internal Server Error' });
     }
 };
 
-exports.getOneproduct = async (req,res,next)=>{
+exports.getOneproduct = async (req, res, next) => {
     try {
         const productId = req.params.productId;
         if (!productId || !mongoose.Types.ObjectId.isValid(productId)) {

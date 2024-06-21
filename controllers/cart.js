@@ -6,7 +6,7 @@ const Product = require('../models/product');
 exports.view = async (req, res) => {
     const userId = req.userId;
     try {
-        const user = await User.findById(userId).populate({path:'cart.product' , select:'name price'})
+        const user = await User.findById(userId).populate({ path: 'cart.product', select: 'name price' })
         if (!user) {
             return res.status(404).json({ error: 'user not found' });
         }
@@ -46,14 +46,25 @@ exports.addItem = async (req, res) => {
         if (!product) {
             return res.status(404).json({ error: 'product not found' });
         }
-        const existingCartItem = user.cart.find(item => item.product.toString() === productId);
+        const existingCartItem = user.cart.find(item => {
+            if (item.product.toString() === productId && item.type === type) {
+                return true;
+            }
+            return false;
+        });
         if (existingCartItem) {
             existingCartItem.qty += qty;
         } else {
-            user.cart.push({ product: productId, qty , type });
+            user.cart.push({ product: productId, qty, type, image: product.image, price: product.price});
         }
         await user.save();
-        res.status(201).json({ message: 'product added to cart' });
+        let totalPrice = 0;
+        for (let item of user.cart) {
+            const product = await Product.findById(item.product)
+            const productPrice = product.price;
+            totalPrice += item.qty * productPrice;
+        }
+        res.status(201).json({ message: 'product added to cart', cart: user.cart, totalPrice });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'internal Server Error' });

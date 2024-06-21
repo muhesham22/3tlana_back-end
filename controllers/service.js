@@ -3,8 +3,6 @@ const Service = require('../models/service');
 const Technician = require('../models/technician');
 const User = require('../models/user');
 
-
-
 exports.viewServices = async (req, res) => {
     try {
         const services = await Service.find().populate('technicians');
@@ -33,8 +31,7 @@ exports.bookService = async (req, res) => {
         })
         await order.save();
         res.json({ message: 'service booked successfully', order });
-    }
-    catch (error) {
+    } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'internal Server Error' });
     }
@@ -57,8 +54,7 @@ exports.viewSingleServices = async (req, res, next) => {
     }
 };
 
-
- exports.addTechnicianToService = async (req , res , next ) => {
+exports.addTechnicianToService = async (req, res, next) => {
     const serviceId = req.params.serviceId;
     const technicianId = req.body.technicianId;
     try {
@@ -77,15 +73,14 @@ exports.viewSingleServices = async (req, res, next) => {
         console.error(error);
         res.status(500).json({ error: 'internal Server Error' });
     }
- }
+};
 
-
- exports.removerService = async (req , res , next) => {
+exports.removerService = async (req, res, next) => {
     const serviceId = req.params.serviceId;
     try {
-        await Service.deleteOne({_id:serviceId})
-        res.json({message:'service deleted'})
+        await Service.deleteOne({ _id: serviceId })
+        res.json({ message: 'service deleted' })
     } catch (error) {
-        res.json({error})
+        res.json({ error })
     }
- }
+};

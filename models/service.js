@@ -9,9 +9,9 @@ const serviceSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    technicians:[{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'Technician'
+    technicians: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Technician'
     }]
     // serviceInstance:{
     //     user: {
@@ -26,4 +26,4 @@ const serviceSchema = new mongoose.Schema({
     // }
 });
 
-module.exports=mongoose.model('Service',serviceSchema);
+module.exports = mongoose.model('Service', serviceSchema);

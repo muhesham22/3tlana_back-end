@@ -75,12 +75,9 @@ exports.login = async (req, res, next) => {
 
 exports.forgetPassword = async (req, res, next) => {
   const { email } = req.body;
-
   try {
     const user = await User.findOne({ email });
-
     if (!user) return res.json({ data: "User does not exist" });
-
     let transporter = nodemailer.createTransport({
       service: "gmail",
       host: "smtp.gmail.email",
@@ -101,19 +98,19 @@ exports.forgetPassword = async (req, res, next) => {
     let mailOptions = {
       from: {
         name: "3tlan",
-        address:"sixr69067@gmail.com"
+        address: "sixr69067@gmail.com"
       }, // Sender address
       to: email, // List of recipients
       subject: "Verfication code", // Subject line
-      html: `<h1>${code}</h1>`, 
+      html: `<h1>${code}</h1>`,
     };
 
-     transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
         return console.log("Error occurred:", error);
       }
       console.log("Email sent successfully!", info);
-      res.json({message:"Email sent successfully!"})
+      res.json({ message: "Email sent successfully!" })
     });
   } catch (e) {
     return res.json({ error: e });

@@ -8,7 +8,7 @@ const Service = require('../models/service');
 
 exports.addproduct = async (req, res, next) => {
     try {
-        const { 
+        const {
             name,
             description,
             price,
@@ -16,7 +16,8 @@ exports.addproduct = async (req, res, next) => {
             qty,
             cbrand,
             cmodel,
-            cyear
+            cyear,
+            types
         } = req.body;
         console.log(req.file);
         const product = new Product({
@@ -24,17 +25,18 @@ exports.addproduct = async (req, res, next) => {
             price,
             description,
             prodbrand: brand,
-            image:req.file.path.replace('\\',"/"),
+            image: req.file.path.replace('\\', "/"),
             qty,
             car: {
-                brand:cbrand,
-                model:cmodel,
-                year:cyear
-            }
+                brand: cbrand,
+                model: cmodel,
+                year: cyear
+            },
+            types
         })
         await product.save();
-        const productId =product._id;
-        res.status(201).json({ message: 'product added successfully' ,productId})
+        const productId = product._id;
+        res.status(201).json({ message: 'product added successfully', productId })
     } catch (error) {
         console.log(error);
         console.log('product could not be added');
@@ -93,20 +95,20 @@ exports.deleteproduct = async (req, res, next) => {
     }
 };
 
-exports.addtech = async (req,res)=>{
+exports.addtech = async (req, res) => {
     try {
-        const { 
+        const {
             name,
             phone,
             field
         } = req.body;
         const technician = new Technician({
-            name ,
+            name,
             phone,
             field
         })
         await technician.save();
-      res.status(201).json({ message: 'technician added successfully' })
+        res.status(201).json({ message: 'technician added successfully' })
     } catch (error) {
         console.log(error);
         console.log('technician could not be added');
@@ -123,16 +125,16 @@ exports.deletetech = async (req, res, next) => {
         if (!technician) {
             return res.status(404).json({ error: 'technician not found' });
         }
-         await technician.deleteOne({ _id: technicianId });
+        await technician.deleteOne({ _id: technicianId });
         res.json({ message: 'technician deleted successfully', technician });
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'internal Server Error' });
     }
 };
-exports.addService = async (req,res)=>{
+exports.addService = async (req, res) => {
     try {
-        const { 
+        const {
             name,
             description,
             technicians
@@ -146,7 +148,7 @@ exports.addService = async (req,res)=>{
         res.status(201).json({ message: 'service added successfully' })
     } catch (error) {
         console.log(error);
-        console.log('service could not be added');
+        res.status(500).json({ error: 'internal server error' });
     }
 };
 exports.deleteservice = async (req, res, next) => {
@@ -169,44 +171,44 @@ exports.deleteservice = async (req, res, next) => {
 
 
 
-exports.getTech = async (req , res , next) => {
-    try {
-        const technicians = await Technician.find();
-        res.status(200).json({ message: 'technician returned', data: technicians });
-}
-catch(e){
-    res.status(500).json({error:e})
-}
-}
-
-exports.getTech = async (req , res , next) => {
+exports.getTech = async (req, res, next) => {
     try {
         const technicians = await Technician.find();
         res.status(200).json({ message: 'technician returned', data: technicians });
     }
-    catch(e){
-        res.json({error:e})
+    catch (e) {
+        res.status(500).json({ error: e })
     }
 }
 
-
-exports.getTechnician = async (req , res , next) => {
+exports.getTech = async (req, res, next) => {
     try {
         const technicians = await Technician.find();
         res.status(200).json({ message: 'technician returned', data: technicians });
     }
-    catch(e){
-        res.json({error:e})
+    catch (e) {
+        res.json({ error: e })
     }
 }
 
-exports.getProducts = async (req , res , next) => {
+
+exports.getTechnician = async (req, res, next) => {
+    try {
+        const technicians = await Technician.find();
+        res.status(200).json({ message: 'technician returned', data: technicians });
+    }
+    catch (e) {
+        res.json({ error: e })
+    }
+}
+
+exports.getProducts = async (req, res, next) => {
     try {
         const products = await Product.find();
         res.status(200).json({ message: 'products returned', data: products });
     }
-    catch(e){
-        res.json({error:e})
+    catch (e) {
+        res.json({ error: e })
     }
 }
 

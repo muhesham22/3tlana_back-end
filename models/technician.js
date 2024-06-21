@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const technicianSchema = new mongoose.Schema({
     name: {
-        type:String,
-        required:true
+        type: String,
+        required: true
     },
     phone: {
         type: String,
@@ -14,4 +14,4 @@ const technicianSchema = new mongoose.Schema({
     }
 });
 
-module.exports=mongoose.model('Technician',technicianSchema);
+module.exports = mongoose.model('Technician', technicianSchema);
